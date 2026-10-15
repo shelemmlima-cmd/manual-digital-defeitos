@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Manual Digital de Defeitos</title><link rel="stylesheet" href="/styles.css"></head>
+<body>
+<header class="top"><div><span class="eyebrow">QUALIDADE · BASE CONTROLADA</span><h1>Manual Digital de Defeitos</h1></div><div id="userbar" hidden><span id="who"></span><button id="logout" class="secondary">Sair</button></div></header>
+<main>
+<section id="loginPanel" class="panel login"><h2>Acesso ao manual</h2><p>Entre com seu usuário autorizado.</p><form id="loginForm"><label>Usuário<input name="username" autocomplete="username" required></label><label>Senha<input name="password" type="password" autocomplete="current-password" required></label><button>Entrar</button><p id="loginError" class="error"></p></form></section>
+<div id="appPanel" hidden>
+<nav class="tabs"><button class="tab active" data-tab="catalog">Catálogo</button><button class="tab" data-tab="editor" id="newTab">Cadastrar defeito</button><button class="tab" data-tab="users" id="usersTab" hidden>Usuários</button><button class="tab" data-tab="audit" id="auditTab" hidden>Auditoria</button></nav>
+<section id="catalog" class="view">
+<div class="summary"><div><b id="count">0</b><span>registros encontrados</span></div><p>Critérios de aceitação são cadastrados pela sua equipe e devem apontar para a fonte técnica aprovada.</p></div>
+<div class="filters panel"><label>Busca livre<input id="q" placeholder="Código, defeito, descrição..."></label><label>Módulo<select id="module"><option value="">Todos os módulos</option></select></label><label>Classificação<input id="classification" placeholder="Ex.: conforme matriz interna"></label><label>Status<select id="status"><option value="">Todos</option><option value="published">Publicado</option><option value="draft">Rascunho</option><option value="archived">Arquivado</option></select></label><button id="clearFilters" class="secondary">Limpar</button></div>
+<div id="cards" class="cards"></div><p id="empty" class="muted" hidden>Nenhum registro encontrado. Cadastre um item ou altere os filtros.</p>
+</section>
+<section id="editor" class="view" hidden><div class="panel"><div class="sectionhead"><div><h2 id="formTitle">Cadastrar defeito</h2><p>Não use este sistema como fonte de critérios normativos sem validação técnica.</p></div><button class="secondary" id="cancelEdit">Voltar</button></div>
+<form id="defectForm"><input type="hidden" name="id"><div class="formgrid">
+<label>Código interno *<input name="code" required maxlength="60" placeholder="Ex.: SMT-0001"></label>
+<label>Título do defeito *<input name="title" required maxlength="180"></label>
+<label>Módulo *<select name="module" required></select></label>
+<label>Classificação interna<input name="classification" maxlength="100" placeholder="Definida pela organização"></label>
+<label>Status<select name="status"><option value="draft">Rascunho</option><option value="published">Publicado</option><option value="archived">Arquivado</option></select></label>
+<label class="wide">Descrição / como identificar<textarea name="description" rows="3"></textarea></label>
+<label class="wide">Critério aprovado / referência técnica<textarea name="criteria" rows="4" placeholder="Informe o critério aprovado pela engenharia/qualidade e a referência documental, revisão e seção. Não há critérios normativos pré-preenchidos."></textarea></label>
+<label class="wide">Disposição / ação recomendada<textarea name="disposition" rows="3" placeholder="Ação autorizada pela equipe responsável."></textarea></label>
+<label class="wide">Nota da revisão<input name="changeNote" maxlength="500" placeholder="Ex.: atualização da referência técnica"></label>
+<label class="wide">Fotos (JPG, PNG, WEBP, GIF; até 8 arquivos de 5 MB cada)<input id="photos" type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple></label>
+</div><div class="formactions"><button type="submit">Salvar registro</button><span id="formMessage" class="muted"></span></div></form></div></section>
+<section id="users" class="view" hidden><div class="panel"><h2>Cadastro de usuários</h2><p>Administrador pode criar contas e ajustar papéis.</p><form id="userForm" class="formgrid"><label>Usuário<input name="username" required minlength="3"></label><label>Nome de exibição<input name="displayName" required></label><label>Senha inicial (mín. 10 caracteres)<input name="password" type="password" required minlength="10"></label><label>Papel<select name="role"><option value="viewer">Visualizador</option><option value="editor">Editor</option><option value="admin">Administrador</option></select></label><div class="wide"><button>Criar usuário</button><span id="userMessage" class="muted"></span></div></form><div id="userList"></div></div></section>
+<section id="audit" class="view" hidden><div class="panel"><h2>Auditoria recente</h2><p>Últimas 300 ações registradas.</p><div id="auditList"></div></div></section>
+</div>
+</main>
+<div id="toast" role="status" aria-live="polite"></div>
+<footer>Manual Digital de Defeitos · Registros e critérios sujeitos à aprovação formal da organização.</footer>
+<script src="/app.js"></script></body></html>
